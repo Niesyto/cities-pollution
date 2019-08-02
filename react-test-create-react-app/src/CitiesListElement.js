@@ -11,7 +11,6 @@ class CitiesListElement extends React.Component{
       };
     }
 
- 
       componentDidMount() {
         fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exintro=1&origin=*&explaintext=1&titles="+this.props.cityName)
           .then(res => res.json())
@@ -21,6 +20,7 @@ class CitiesListElement extends React.Component{
                     cityInfo : result.query.pages,
                     isLoaded : true
                 });
+                return;
             });
       }
 
@@ -46,7 +46,5 @@ class CitiesListElement extends React.Component{
         }
     }
 }
-
-
 
 export default CitiesListElement;

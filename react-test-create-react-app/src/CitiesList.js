@@ -7,20 +7,22 @@ class CitiesList extends React.Component{
     constructor(props){
         super(props);
     this.state = {
-        country: "",
-        cities: [],
-        isLoaded:false
+      parameter: "",
+      country: "",
+      cities: [],
+      isLoaded:false
       };
     }
 
   componentDidUpdate(){
    
-    fetch("https://api.openaq.org/v1/latest?order_by=value&sort=desc&limit=10&parameter=so2&country="+this.props.country)
+    fetch(`https://api.openaq.org/v1/latest?order_by=value&sort=desc&limit=10&parameter=${this.props.parameter}&country=${this.props.country}`)
       .then(res => res.json())
       .then(
         (result) => {
             this.setState({
                 country : this.props.country,
+                parameter : this.props.parameter,
                 cities : result.results,
                 isLoaded : true
             });
@@ -29,7 +31,7 @@ class CitiesList extends React.Component{
 
 
   static getDerivedStateFromProps(props, state) {
-    if (props.country !== state.country) {
+    if ((props.country !== state.country) || (props.parameter !== state.parameter)) {
       return {
         isLoaded:false
       };
@@ -52,6 +54,7 @@ class CitiesList extends React.Component{
                 {cities.map(city => (
                     <Accordion atomic={true}>
                         <CitiesListElement
+                        key={city.location}
                         cityName={city.city}
                         />
                     </Accordion>
