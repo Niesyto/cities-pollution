@@ -16,7 +16,7 @@ class CitiesList extends React.Component{
 
   componentDidUpdate(){
    
-    fetch(`https://api.openaq.org/v1/latest?order_by=value&sort=desc&limit=10&parameter=${this.props.parameter}&country=${this.props.country}`)
+    fetch(`https://api.openaq.org/v1/latest?order_by=value&sort=desc&limit=10&parameter=${this.props.parameter}&country=${this.props.country}`, {mode: 'cors'})
       .then(res => res.json())
       .then(
         (result) => {
@@ -52,9 +52,8 @@ class CitiesList extends React.Component{
             return(
                 <div className="w-10 p-3">
                 {cities.map(city => (
-                    <Accordion atomic={true}>
+                    <Accordion atomic={true} key={city.location}>
                         <CitiesListElement
-                        key={city.location}
                         cityName={city.city}
                         />
                     </Accordion>
