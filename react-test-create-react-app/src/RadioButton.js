@@ -1,15 +1,25 @@
-import React from 'react';
-import ButtonGroup  from 'react-bootstrap/ButtonGroup'
+import React, {useState, useEffect} from 'react';
+import ButtonGroup  from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 
 function RadioButton(props) {
+    const [isMobile, setIsMobile] = useState(true);
+    
+    useEffect(() => {
+          if (window.innerWidth>600)
+          setIsMobile(false)
+          else
+          setIsMobile(true)
+    },[]);
+
+
 
     function handleChange(e) {
         props.setParameter(e.currentTarget.value);
-    }    
+    }   
 
     return(  
-        <ButtonGroup justified>
+        <ButtonGroup vertical={isMobile} className='btn-group'>
             <Button value="pm25" onClick={handleChange}>PM2,5</Button>
             <Button value="pm10" onClick={handleChange}>PM10</Button>
             <Button value="so2" onClick={handleChange}>SO₂</Button>
@@ -20,7 +30,6 @@ function RadioButton(props) {
         </ButtonGroup>  
     )
 }
-
 
 
 export default RadioButton;
